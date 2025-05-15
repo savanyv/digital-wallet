@@ -16,7 +16,7 @@ type JWTClaim struct {
 }
 
 type JWTService interface {
-	GenerateToken(userID uint, email string) (string, error)
+	GenerateToken(userID int64, email string) (string, error)
 	ValidateToken(tokenString string) (*JWTClaim, error)
 }
 

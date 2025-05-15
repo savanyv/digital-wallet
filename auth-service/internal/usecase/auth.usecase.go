@@ -72,7 +72,7 @@ func (u *authUsecase) Login(req *dtos.LoginRequest) (*dtos.AuthResponse, error) 
 	}
 
 	// generate token
-	token, err := u.jwt.GenerateToken(uint(user.ID))
+	token, err := u.jwt.GenerateToken(user.ID, user.Email)
 	if err != nil {
 		return nil, errors.New("Error generating token")
 	}
@@ -82,4 +82,6 @@ func (u *authUsecase) Login(req *dtos.LoginRequest) (*dtos.AuthResponse, error) 
 		Token: token,
 		Message: "Login successful",
 	}
+
+	return resp, nil
 }
