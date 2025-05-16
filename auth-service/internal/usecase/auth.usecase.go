@@ -29,30 +29,30 @@ func NewAuthUsecase(repo repository.AuthRepository) AuthUsecase {
 
 func (u *authUsecase) Register(req *dtos.RegisterRequest) (*dtos.AuthResponse, error) {
 	// check if email exists
-	user, err := u.repo.FindUserByEmail(req.Email)
-	if err != nil {
-		return nil, errors.New("Email already exists")
+	_, err := u.repo.FindUserByEmail(req.Email)
+	if err == nil {
+		return nil, errors.New("email already exists")
 	}
 
 	// hash password
 	hashedPassword, err := bcrypt.HashPassword(req.Password)
 	if err != nil {
-		return nil, errors.New("Error hashing password")
+		return nil, errors.New("error hashing password")
 	}
 
 	// create user
-	user = &models.Auth{
+	user := &models.Auth{
 		Name:     req.Name,
 		Email:    req.Email,
 		Password: hashedPassword,
 	}
 
 	if err := u.repo.Create(user); err != nil {
-		return nil, errors.New("Error creating user")
+		return nil, errors.New("error creating user")
 	}
 
 	resp := &dtos.AuthResponse{
-		UserId: string(user.ID),
+		UserId: user.ID,
 		Message: "User created successfully",
 	}
 
@@ -63,22 +63,22 @@ func (u *authUsecase) Login(req *dtos.LoginRequest) (*dtos.AuthResponse, error) 
 	// check if email exists
 	user, err := u.repo.FindUserByEmail(req.Email)
 	if err != nil {
-		return nil, errors.New("User not found")
+		return nil, errors.New("user not found")
 	}
 
 	// compare password
 	if err := bcrypt.ComparePassword(user.Password, req.Password); err != nil {
-		return nil, errors.New("Invalid email or password")
+		return nil, errors.New("invalid email or password")
 	}
 
 	// generate token
 	token, err := u.jwt.GenerateToken(user.ID, user.Email)
 	if err != nil {
-		return nil, errors.New("Error generating token")
+		return nil, errors.New("error generating token")
 	}
 
 	resp := &dtos.AuthResponse{
-		UserId: string(user.ID),
+		UserId: user.ID,
 		Token: token,
 		Message: "Login successful",
 	}

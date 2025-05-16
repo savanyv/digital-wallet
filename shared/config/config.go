@@ -12,14 +12,19 @@ type Config struct {
 	DBAHost string
 	DBAPort string
 	DBAUser string
-	DBAPassword string
+	DBAPass string
+	DBAName string
 
 	// Jwt
 	SecretKey string
 }
 
 func LoadConfig() *Config {
-	if err := godotenv.Load(); err != nil {
+	if err := godotenv.Load(
+		".env",
+		"../../.env",
+		"../../../.env",
+	); err != nil {
 		log.Println("Error loading .env file")
 	}
 
@@ -28,7 +33,8 @@ func LoadConfig() *Config {
 		DBAHost: getEnv("DBA_HOST"),
 		DBAPort: getEnv("DBA_PORT"),
 		DBAUser: getEnv("DBA_USER"),
-		DBAPassword: getEnv("DBA_PASSWORD"),
+		DBAPass: getEnv("DBA_PASS"),
+		DBAName: getEnv("DBA_NAME"),
 
 		// Jwt
 		SecretKey: getEnv("JWT_SECRET_KEY"),
@@ -37,9 +43,9 @@ func LoadConfig() *Config {
 
 func getEnv(key string) string {
 	value, ok := os.LookupEnv(key)
-	if ok {
-		return value
+	if !ok {
+		log.Fatalf("Missing environment variable: %s", key)
 	}
 
-	return ""
+	return value
 }

@@ -17,8 +17,8 @@ func ConnectPosgres(cfg *config.Config) (*gorm.DB, error) {
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		cfg.DBAHost,
 		cfg.DBAUser,
-		cfg.DBAPassword,
-		cfg.DBAHost,
+		cfg.DBAPass,
+		cfg.DBAName,
 		cfg.DBAPort,
 	)
 

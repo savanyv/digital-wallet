@@ -21,7 +21,7 @@ message LoginRequest{
 }
 
 message AuthResponse{
-      string user_id = 1;
+      int64 user_id = 1;
       string token = 2;
       string message = 3;
 }
