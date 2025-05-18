@@ -15,16 +15,19 @@ type Config struct {
 	DBAPass string
 	DBAName string
 
+	// Environment Variable User Service
+	DBUHost string
+	DBUPort string
+	DBUUser string
+	DBUPass string
+	DBUName string
+
 	// Jwt
 	SecretKey string
 }
 
 func LoadConfig() *Config {
-	if err := godotenv.Load(
-		".env",
-		"../../.env",
-		"../../../.env",
-	); err != nil {
+	if err := godotenv.Load("../.env"); err != nil {
 		log.Println("Error loading .env file")
 	}
 
@@ -35,6 +38,13 @@ func LoadConfig() *Config {
 		DBAUser: getEnv("DBA_USER"),
 		DBAPass: getEnv("DBA_PASS"),
 		DBAName: getEnv("DBA_NAME"),
+
+		// Environment Variable User Service
+		DBUHost: getEnv("DBU_HOST"),
+		DBUPort: getEnv("DBU_PORT"),
+		DBUUser: getEnv("DBU_USER"),
+		DBUPass: getEnv("DBU_PASS"),
+		DBUName: getEnv("DBU_NAME"),
 
 		// Jwt
 		SecretKey: getEnv("JWT_SECRET_KEY"),

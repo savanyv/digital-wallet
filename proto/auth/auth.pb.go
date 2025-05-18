@@ -211,7 +211,7 @@ const file_auth_auth_proto_rawDesc = "" +
 	"\amessage\x18\x03 \x01(\tR\amessage2u\n" +
 	"\vAuthService\x125\n" +
 	"\bRegister\x12\x15.auth.RegisterRequest\x1a\x12.auth.AuthResponse\x12/\n" +
-	"\x05Login\x12\x12.auth.LoginRequest\x1a\x12.auth.AuthResponseB\tZ\a./;authb\x06proto3"
+	"\x05Login\x12\x12.auth.LoginRequest\x1a\x12.auth.AuthResponseB.Z,github.com/savanyv/digital-wallet/proto/authb\x06proto3"
 
 var (
 	file_auth_auth_proto_rawDescOnce sync.Once
