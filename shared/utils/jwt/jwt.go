@@ -1,7 +1,6 @@
 package jwt
 
 import (
-	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -16,7 +15,7 @@ type JWTClaim struct {
 }
 
 type JWTService interface {
-	GenerateToken(userID int64, email string) (string, error)
+	GenerateToken(userID string, email string) (string, error)
 	ValidateToken(tokenString string) (*JWTClaim, error)
 }
 
@@ -32,9 +31,9 @@ func NewJWTService() JWTService {
 	}
 }
 
-func (j *jwtService) GenerateToken(userID int64, email string) (string, error) {
+func (j *jwtService) GenerateToken(userID string, email string) (string, error) {
 	claims := &JWTClaim{
-		UserID: strconv.Itoa(int(userID)),
+		UserID: userID,
 		Email: email,
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer: j.issuer,

@@ -4,13 +4,13 @@ import (
 	"log"
 	"net"
 
+	pb "github.com/savanyv/digital-wallet/proto/user"
 	"github.com/savanyv/digital-wallet/shared/config"
 	"github.com/savanyv/digital-wallet/user-service/internal/database"
 	grpcdelivery "github.com/savanyv/digital-wallet/user-service/internal/delivery/grpc"
 	"github.com/savanyv/digital-wallet/user-service/internal/repository"
-	"github.com/savanyv/digital-wallet/user-service/usecase"
+	"github.com/savanyv/digital-wallet/user-service/internal/usecase"
 	"google.golang.org/grpc"
-	pb "github.com/savanyv/digital-wallet/proto/user"
 )
 
 func Run() {

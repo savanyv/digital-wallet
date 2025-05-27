@@ -22,6 +22,13 @@ type Config struct {
 	DBUPass string
 	DBUName string
 
+	// Environment Variable Wallet Service
+	DBWHost string
+	DBWPort string
+	DBWUser string
+	DBWPass string
+	DBWName string
+
 	// Jwt
 	SecretKey string
 }
@@ -45,6 +52,13 @@ func LoadConfig() *Config {
 		DBUUser: getEnv("DBU_USER"),
 		DBUPass: getEnv("DBU_PASS"),
 		DBUName: getEnv("DBU_NAME"),
+
+		// Environment Variable Wallet Service
+		DBWHost: getEnv("DBW_HOST"),
+		DBWPort: getEnv("DBW_PORT"),
+		DBWUser: getEnv("DBW_USER"),
+		DBWPass: getEnv("DBW_PASS"),
+		DBWName: getEnv("DBW_NAME"),
 
 		// Jwt
 		SecretKey: getEnv("JWT_SECRET_KEY"),

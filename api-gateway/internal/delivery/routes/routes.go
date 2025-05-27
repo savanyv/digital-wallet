@@ -6,4 +6,6 @@ func RegisterRoutes(app *fiber.App) {
 	api := app.Group("/api")
 
 	authServiceRoutes(api)
+	userServiceRoutes(api)
+	walletServiceRoutes(api)
 }

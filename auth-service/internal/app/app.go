@@ -30,7 +30,11 @@ func Run() {
 	if err != nil {
 		log.Fatalf("failed to connect to user service: %v", err)
 	}
-	usecase := usecase.NewAuthUsecase(repo, userClient)
+	walletClient, err := client.NewWalletGrpcClient()
+	if err != nil {
+		log.Fatalf("failed to connect to wallet service: %v", err)
+	}
+	usecase := usecase.NewAuthUsecase(repo, userClient, walletClient)
 
 	// initialize grpc server
 	lis, err := net.Listen("tcp", ":50050")

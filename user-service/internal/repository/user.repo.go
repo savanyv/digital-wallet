@@ -7,7 +7,7 @@ import (
 
 type UserRepository interface {
 	Create(req *models.User) error
-	FindUserByID(id int64) (*models.User, error)
+	FindUserByID(id string) (*models.User, error)
 	FindUserByEmail(email string) (*models.User, error)
 }
 
@@ -29,7 +29,7 @@ func (r *userRepository) Create(req *models.User) error {
 	return nil
 }
 
-func (r *userRepository) FindUserByID(id int64) (*models.User, error) {
+func (r *userRepository) FindUserByID(id string) (*models.User, error) {
 	var user models.User
 	if err := r.db.Where("id = ?", id).First(&user).Error; err != nil {
 		return nil, err

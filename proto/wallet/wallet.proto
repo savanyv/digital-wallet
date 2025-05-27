@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package wallet;
+
+option go_package = "github.com/savanyv/digital-wallet/proto/wallet";
+
+service WalletService {
+      rpc CreateWallet(CreateWalletRequest) returns (WalletResponse);
+      rpc GetWallet(GetWalletRequest) returns (WalletResponse);
+      rpc UpdateBalance(UpdateBalanceRequest) returns (WalletResponse);
+}
+
+message CreateWalletRequest {
+      string user_id = 1;
+}
+
+message GetWalletRequest {
+      string user_id = 1;
+}
+
+message UpdateBalanceRequest {
+      string user_id = 1;
+      double balance = 2;
+      string operation = 3;
+}
+
+message WalletResponse {
+      string user_id = 1;
+      double balance = 2;
+      string message = 3;
+}

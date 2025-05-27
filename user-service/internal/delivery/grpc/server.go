@@ -5,7 +5,7 @@ import (
 
 	pb "github.com/savanyv/digital-wallet/proto/user"
 	dtos "github.com/savanyv/digital-wallet/user-service/internal/dto"
-	"github.com/savanyv/digital-wallet/user-service/usecase"
+	"github.com/savanyv/digital-wallet/user-service/internal/usecase"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -40,7 +40,7 @@ func (u *UserServer) CreateUser(ctx context.Context, req *pb.CreateUserRequest) 
 	return resp, nil
 }
 
-func (u *UserServer) FindUserByID(ctx context.Context, req *pb.GetUserRequest) (*pb.UserResponse, error) {
+func (u *UserServer) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.UserResponse, error) {
 	result, err := u.usecase.FindUserByID(req.UserId)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
@@ -55,7 +55,7 @@ func (u *UserServer) FindUserByID(ctx context.Context, req *pb.GetUserRequest) (
 	return resp, nil
 }
 
-func (u *UserServer) FindUserByEmail(ctx context.Context, req *pb.GetUserByEmailRequest) (*pb.UserResponse, error) {
+func (u *UserServer) GetUserByEmail(ctx context.Context, req *pb.GetUserByEmailRequest) (*pb.UserResponse, error) {
 	result, err := u.usecase.FindUserByEmail(req.Email)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
