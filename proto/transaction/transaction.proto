@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package transaction;
+
+option go_package = "github.com/savanyv/digital-wallet/proto/transaction";
+
+service TransactionService {
+      rpc Deposit(DepositWithdrawRequest) returns (TransactionResponse);
+      rpc Withdraw(DepositWithdrawRequest) returns (TransactionResponse);
+      rpc Transfer(TransferRequest) returns (TransactionResponse);
+      rpc GetTransactionHistory(GetHistoryRequest) returns (TransactionHistoryResponse);
+}
+
+message DepositWithdrawRequest {
+      string user_id = 1;
+      int64 amount = 2;
+}
+
+message TransferRequest {
+      string sender_id = 1;
+      string receiver_id = 2;
+      int64 amount = 3;
+}
+
+message GetHistoryRequest {
+      string user_id = 1;
+}
+
+message TransactionResponse {
+      string transaction_id = 1;
+      string user_id = 2;
+      string type = 3;
+      int64 amount = 4;
+      string message = 5;
+      string created_at = 6;
+}
+
+message Transaction {
+      string transaction_id = 1;
+      string user_id = 2;
+      string type = 3;
+      int64 amount = 4;
+      string description = 5;
+      string created_at = 6;
+    }
+
+
+message TransactionHistoryResponse {
+      repeated Transaction transactions = 1;
+}

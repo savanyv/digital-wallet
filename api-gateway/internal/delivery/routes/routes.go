@@ -8,4 +8,5 @@ func RegisterRoutes(app *fiber.App) {
 	authServiceRoutes(api)
 	userServiceRoutes(api)
 	walletServiceRoutes(api)
+	transactionServiceRoutes(api)
 }

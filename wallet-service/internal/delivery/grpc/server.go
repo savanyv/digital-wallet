@@ -30,9 +30,8 @@ func (u *WalletServer) CreateWallet(ctx context.Context, req *pb.CreateWalletReq
 	}
 
 	resp := &pb.WalletResponse{
-		UserId:   result.UserID,
-		Balance:  result.Balance,
-		Message:  result.Message,
+		UserId: result.UserID,
+
 	}
 
 	return resp, nil
@@ -48,7 +47,7 @@ func (u *WalletServer) GetWallet(ctx context.Context, req *pb.GetWalletRequest) 
 
 	resp := &pb.WalletResponse{
 		UserId: result.UserID,
-		Balance: result.Balance,
+		Balance: int64(result.Balance),
 		Message: result.Message,
 	}
 
@@ -58,6 +57,8 @@ func (u *WalletServer) GetWallet(ctx context.Context, req *pb.GetWalletRequest) 
 func (u *WalletServer) UpdateBalance(ctx context.Context, req *pb.UpdateBalanceRequest) (*pb.WalletResponse, error) {
 	result, err := u.usecase.UpdateBalance(&dtos.UpdateBalanceRequest{
 		UserID: req.UserId,
+		Amount: req.Amount,
+		Operation: req.Operation,
 	})
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())

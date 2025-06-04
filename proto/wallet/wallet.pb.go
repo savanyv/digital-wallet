@@ -112,7 +112,7 @@ func (x *GetWalletRequest) GetUserId() string {
 type UpdateBalanceRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Balance       float64                `protobuf:"fixed64,2,opt,name=balance,proto3" json:"balance,omitempty"`
+	Amount        int64                  `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty"`
 	Operation     string                 `protobuf:"bytes,3,opt,name=operation,proto3" json:"operation,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -155,9 +155,9 @@ func (x *UpdateBalanceRequest) GetUserId() string {
 	return ""
 }
 
-func (x *UpdateBalanceRequest) GetBalance() float64 {
+func (x *UpdateBalanceRequest) GetAmount() int64 {
 	if x != nil {
-		return x.Balance
+		return x.Amount
 	}
 	return 0
 }
@@ -172,7 +172,7 @@ func (x *UpdateBalanceRequest) GetOperation() string {
 type WalletResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Balance       float64                `protobuf:"fixed64,2,opt,name=balance,proto3" json:"balance,omitempty"`
+	Balance       int64                  `protobuf:"varint,2,opt,name=balance,proto3" json:"balance,omitempty"`
 	Message       string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -215,7 +215,7 @@ func (x *WalletResponse) GetUserId() string {
 	return ""
 }
 
-func (x *WalletResponse) GetBalance() float64 {
+func (x *WalletResponse) GetBalance() int64 {
 	if x != nil {
 		return x.Balance
 	}
@@ -237,14 +237,14 @@ const file_wallet_wallet_proto_rawDesc = "" +
 	"\x13CreateWalletRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\"+\n" +
 	"\x10GetWalletRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\"g\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"e\n" +
 	"\x14UpdateBalanceRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x18\n" +
-	"\abalance\x18\x02 \x01(\x01R\abalance\x12\x1c\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x16\n" +
+	"\x06amount\x18\x02 \x01(\x03R\x06amount\x12\x1c\n" +
 	"\toperation\x18\x03 \x01(\tR\toperation\"]\n" +
 	"\x0eWalletResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x18\n" +
-	"\abalance\x18\x02 \x01(\x01R\abalance\x12\x18\n" +
+	"\abalance\x18\x02 \x01(\x03R\abalance\x12\x18\n" +
 	"\amessage\x18\x03 \x01(\tR\amessage2\xda\x01\n" +
 	"\rWalletService\x12C\n" +
 	"\fCreateWallet\x12\x1b.wallet.CreateWalletRequest\x1a\x16.wallet.WalletResponse\x12=\n" +

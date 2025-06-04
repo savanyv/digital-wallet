@@ -29,6 +29,13 @@ type Config struct {
 	DBWPass string
 	DBWName string
 
+	// Environment Variable Transaction Service
+	DBTHost string
+	DBTPort string
+	DBTUser string
+	DBTPass string
+	DBTName string
+
 	// Jwt
 	SecretKey string
 }
@@ -59,6 +66,13 @@ func LoadConfig() *Config {
 		DBWUser: getEnv("DBW_USER"),
 		DBWPass: getEnv("DBW_PASS"),
 		DBWName: getEnv("DBW_NAME"),
+
+		// Environment Variable Transaction Service
+		DBTHost: getEnv("DBT_HOST"),
+		DBTPort: getEnv("DBT_PORT"),
+		DBTUser: getEnv("DBT_USER"),
+		DBTPass: getEnv("DBT_PASS"),
+		DBTName: getEnv("DBT_NAME"),
 
 		// Jwt
 		SecretKey: getEnv("JWT_SECRET_KEY"),

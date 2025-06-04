@@ -20,12 +20,12 @@ message GetWalletRequest {
 
 message UpdateBalanceRequest {
       string user_id = 1;
-      double balance = 2;
+      int64 amount = 2;
       string operation = 3;
 }
 
 message WalletResponse {
       string user_id = 1;
-      double balance = 2;
+      int64 balance = 2;
       string message = 3;
 }

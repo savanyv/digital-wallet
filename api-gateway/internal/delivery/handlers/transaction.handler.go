@@ -1,0 +1,67 @@
+package handlers
+
+import (
+	"context"
+	"log"
+	"time"
+
+	"github.com/gofiber/fiber/v2"
+	pb "github.com/savanyv/digital-wallet/proto/transaction"
+	"google.golang.org/grpc"
+)
+
+var transactionClient pb.TransactionServiceClient
+
+func init() {
+	conn, err := grpc.Dial("localhost:50053", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Failed to connect: %v", err)
+	}
+	transactionClient = pb.NewTransactionServiceClient(conn)
+}
+
+func Deposit(c *fiber.Ctx) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	reqBody := new(pb.DepositWithdrawRequest)
+	if err := c.BodyParser(reqBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	resp, err := transactionClient.Deposit(ctx, reqBody)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data": resp,
+	})
+}
+
+func Withdraw(c *fiber.Ctx) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	reqBody := new(pb.DepositWithdrawRequest)
+	if err := c.BodyParser(reqBody); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	resp, err := transactionClient.Withdraw(ctx, reqBody)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data": resp,
+	})
+}
