@@ -103,3 +103,22 @@ func Transfer(c *fiber.Ctx) error {
 		"data": resp,
 	})
 }
+
+func GetTransactionHistory(c *fiber.Ctx) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	resp, err := transactionClient.GetTransactionHistory(ctx, &pb.GetHistoryRequest{
+		UserId: c.Params("user_id"),
+	})
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data": resp,
+	})
+}

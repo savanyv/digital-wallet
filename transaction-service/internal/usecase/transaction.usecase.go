@@ -18,7 +18,7 @@ type TransactionUsecase interface {
 	Deposit(req *dtos.DepositWithdrawRequest) (*dtos.TransactionResponse, error)
 	Withdraw(req *dtos.DepositWithdrawRequest) (*dtos.TransactionResponse, error)
 	Transfer(req *dtos.TransferRequest) (*dtos.TransactionResponse, error)
-	GetHistory(userID string) ([]dtos.Transaction, error)
+	GetTransactionHistory(userID string) ([]dtos.Transaction, error)
 }
 
 type transactionUsecase struct {
@@ -180,7 +180,7 @@ func (u *transactionUsecase) Transfer(req *dtos.TransferRequest) (*dtos.Transact
 	return resp, nil
 }
 
-func (u *transactionUsecase) GetHistory(userID string) ([]dtos.Transaction, error) {
+func (u *transactionUsecase) GetTransactionHistory(userID string) ([]dtos.Transaction, error) {
 	transactions, err := u.repo.GetByUserID(uuid.MustParse(userID))
 	if err != nil {
 		return nil, err

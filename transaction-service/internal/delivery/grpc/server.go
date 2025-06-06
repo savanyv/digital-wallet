@@ -113,3 +113,28 @@ func (s *TransactionServer) Transfer(ctx context.Context, req *pb.TransferReques
 
 	return resp, nil
 }
+
+func (s *TransactionServer) GetTransactionHistory(ctx context.Context, req *pb.GetHistoryRequest) (*pb.TransactionHistoryResponse, error) {
+	result, err := s.usecase.GetTransactionHistory(req.UserId)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	var transactions []*pb.Transaction
+	for _, t := range result {
+		transactions = append(transactions, &pb.Transaction{
+			TransactionId: t.TransactionID,
+			UserId: t.UserID,
+			Type: t.Type,
+			Amount: t.Amount,
+			Description: t.Description,
+			CreatedAt: t.CreatedAt.Format(time.RFC3339),
+		})
+	}
+
+	resp := &pb.TransactionHistoryResponse{
+		Transactions: transactions,
+	}
+
+	return resp, nil
+}

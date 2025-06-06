@@ -13,4 +13,5 @@ func transactionServiceRoutes(app fiber.Router) {
 	app.Post("/transactions/deposit", middlewares.AuthMiddlewares(jwtService), handlers.Deposit)
 	app.Post("/transactions/withdraw", middlewares.AuthMiddlewares(jwtService), handlers.Withdraw)
 	app.Post("transactions/transfer", middlewares.AuthMiddlewares(jwtService), handlers.Transfer)
+	app.Get("/transactions/:user_id", middlewares.AuthMiddlewares(jwtService), handlers.GetTransactionHistory)
 }
