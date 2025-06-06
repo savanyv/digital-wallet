@@ -4,14 +4,15 @@ import (
 	"log"
 	"net"
 
+	pb "github.com/savanyv/digital-wallet/proto/transaction"
 	"github.com/savanyv/digital-wallet/shared/config"
+	"github.com/savanyv/digital-wallet/shared/utils/jwt"
 	"github.com/savanyv/digital-wallet/transaction-service/internal/client"
 	"github.com/savanyv/digital-wallet/transaction-service/internal/database"
 	grpcdelivery "github.com/savanyv/digital-wallet/transaction-service/internal/delivery/grpc"
 	"github.com/savanyv/digital-wallet/transaction-service/internal/repository"
 	"github.com/savanyv/digital-wallet/transaction-service/internal/usecase"
 	"google.golang.org/grpc"
-	pb "github.com/savanyv/digital-wallet/proto/transaction"
 )
 
 func Run() {
@@ -34,7 +35,8 @@ func Run() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	transactionServer := grpcdelivery.NewTransactionServer(usecase)
+	jwtService := jwt.NewJWTService()
+	transactionServer := grpcdelivery.NewTransactionServer(usecase, jwtService)
 
 	s := grpc.NewServer()
 	pb.RegisterTransactionServiceServer(s, transactionServer)
