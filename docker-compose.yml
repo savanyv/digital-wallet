@@ -1,0 +1,128 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - user-service
+      - auth-service
+      - wallet-service
+      - transaction-service
+    env_file:
+      - .env
+    networks:
+      - backend
+
+  user-db:
+    image: postgres:15-alpine
+    container_name: user-db
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  user-service:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
+    ports:
+      - 50051:50051
+    depends_on:
+      - user-db
+    env_file:
+      - .env
+    networks:
+      - backend
+
+  auth-db:
+    image: postgres:15-alpine
+    container_name: auth-db
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    ports:
+      - 50050:50050
+    depends_on:
+      - auth-db
+    env_file:
+      - .env
+    networks:
+      - backend
+
+  wallet-db:
+    image: postgres:15-alpine
+    container_name: wallet-db
+    environment:
+      POSTGRES_DB: wallet_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - wallet_db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  wallet-service:
+    build:
+      context: .
+      dockerfile: wallet-service/Dockerfile
+    ports:
+      - 50052:50052
+    depends_on:
+      - wallet-db
+    env_file:
+      - .env
+    networks:
+      - backend
+
+  transaction-db:
+    image: postgres:15-alpine
+    container_name: transaction-db
+    environment:
+      POSTGRES_DB: transaction_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - transaction_db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  transaction-service:
+    build:
+      context: .
+      dockerfile: transaction-service/Dockerfile
+    ports:
+      - 50053:50053
+    depends_on:
+      - transaction-db
+    env_file:
+      - .env
+    networks:
+      - backend
+
+volumes:
+  auth_db_data:
+  user_db_data:
+  wallet_db_data:
+  transaction_db_data:
+
+networks:
+  backend:
+    driver: bridge

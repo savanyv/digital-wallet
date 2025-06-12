@@ -13,7 +13,7 @@ import (
 var userClient pb.UserServiceClient
 
 func init() {
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	conn, err := grpc.Dial("user-service:50051", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)
 	}

@@ -15,7 +15,7 @@ import (
 var transactionClient pb.TransactionServiceClient
 
 func init() {
-	conn, err := grpc.Dial("localhost:50053", grpc.WithInsecure())
+	conn, err := grpc.Dial("transaction-service:50053", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)
 	}

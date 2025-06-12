@@ -13,7 +13,7 @@ import (
 var walletClient pb.WalletServiceClient
 
 func init() {
-	conn, err := grpc.Dial("localhost:50052", grpc.WithInsecure())
+	conn, err := grpc.Dial("wallet-service:50052", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)
 	}

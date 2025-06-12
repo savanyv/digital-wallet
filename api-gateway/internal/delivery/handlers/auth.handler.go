@@ -12,8 +12,8 @@ import (
 
 var authClient pb.AuthServiceClient
 
-func  init() {
-	conn, err := grpc.Dial("localhost:50050", grpc.WithInsecure())
+func init() {
+	conn, err := grpc.Dial("auth-service:50050", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)
 	}

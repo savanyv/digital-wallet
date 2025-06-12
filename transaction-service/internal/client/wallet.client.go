@@ -18,7 +18,7 @@ type walletGrpcClient struct {
 }
 
 func NewWalletGrpcClient() (WalletGrpcClient, error) {
-	conn, err := grpc.Dial("localhost:50052", grpc.WithInsecure(), grpc.WithBlock(), grpc.WithTimeout(5*time.Second))
+	conn, err := grpc.Dial("wallet-service:50052", grpc.WithInsecure(), grpc.WithBlock(), grpc.WithTimeout(5*time.Second))
 	if err != nil {
 		return nil, err
 	}

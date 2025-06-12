@@ -19,7 +19,7 @@ type userGrpcClient struct {
 }
 
 func NewUserGrpcClient() (UserGrpcClient, error) {
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure(), grpc.WithBlock(), grpc.WithTimeout(5*time.Second))
+	conn, err := grpc.Dial("user-service:50051", grpc.WithInsecure(), grpc.WithBlock(), grpc.WithTimeout(5*time.Second))
 	if err != nil {
 		return nil, err
 	}
